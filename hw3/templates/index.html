@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1> Movie Reviews</h1>
+    <a href="{{ url_for('create_review') }}">
+        <button class="add_button">Add Review</button>
+    </a>
+    <table style="width:50%">
+        <tr> 
+            <th >Title</th>
+            <th >Rating</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for review in reviews %}
+        <tr>
+            <td>{{review.title}}</td>
+            <td>{{review.rating}}</td>
+            <td> <a href={}></a>Edit</td>
+            <td>Delete</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

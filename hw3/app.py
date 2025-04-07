@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from flask import render_template, request,redirect
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -90,8 +91,18 @@ def reset_db():
 
 @app.route('/')
 def show_all_reviews():
-    return 'Welcome to Movie Theater reviews!'
+    reviews = db_manager.get()
+    return render_template("index.html", reviews = reviews)
 
+@app.route('/create', methods=['GET', 'POST'])
+def create_review():
+    if request.method == 'POST':
+        title = request.form['title']
+        review = request.form['review']
+        rating = request.form['rating']
+        db_manager.create(title,review,rating)
+        return redirect(url_for('show_all_reviews'))  
+    return render_template("form.html", mode="create")
   
 # RUN THE FLASK APP
 if __name__ == "__main__":
