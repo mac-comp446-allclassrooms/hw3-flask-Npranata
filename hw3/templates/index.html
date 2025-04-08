@@ -22,7 +22,11 @@
             <td>{{review.title}}</td>
             <td>{{review.rating}}</td>
             <td> <a href={}></a>Edit</td>
-            <td>Delete</td>
+            <td>
+                <form method="POST" action="{{url_for('delete_review', review_id = review.id)}}">
+                    <button type="submit"> Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>

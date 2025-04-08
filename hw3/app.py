@@ -103,6 +103,11 @@ def create_review():
         db_manager.create(title,review,rating)
         return redirect(url_for('show_all_reviews'))  
     return render_template("form.html", mode="create")
+
+@app.route('/delete/<int:review_id>', methods=['POST'])
+def delete_review(review_id):
+   db_manager.delete(review_id)
+   return redirect(url_for('show_all_reviews'))  
   
 # RUN THE FLASK APP
 if __name__ == "__main__":
