@@ -2,7 +2,7 @@ h1{
     display: flex;
     justify-content: center;
 }
-.add_button{
+.add_review{
     position: absolute;
     right: 100px;
     top: 18px;
@@ -13,4 +13,5 @@ table{
 }
 table, th, td {
     border:1px solid black;
-  }
+    text-align: center;
+}

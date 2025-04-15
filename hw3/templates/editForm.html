@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='editForm.css') }}">
     <title>Document</title>
 </head>
 <body>
-    <div class="reviewForm">
+    <div class="editForm">
         <form method="POST">
             <label>
-                Movie Title: 
-                <input type="text" name="title">
-            </label>
+                Title:
+                <input type="text" name="title" value="{{ review.title }}">
+            </label>        
             <br><br>
             <label>
                 Review:
-                <textarea name="review"> </textarea>
+                <textarea name="review"> {{review.text}} </textarea>
             </label>
             <br><br>
             <label> 

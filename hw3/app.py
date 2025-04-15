@@ -102,12 +102,30 @@ def create_review():
         rating = request.form['rating']
         db_manager.create(title,review,rating)
         return redirect(url_for('show_all_reviews'))  
-    return render_template("form.html", mode="create")
+    return render_template("form.html")
 
-@app.route('/delete/<int:review_id>', methods=['POST'])
+@app.route('/delete/<int:review_id>')
 def delete_review(review_id):
    db_manager.delete(review_id)
    return redirect(url_for('show_all_reviews'))  
+
+@app.route('/check_review/<int:review_id>')
+def checkReview(review_id):
+    review = db_manager.get(review_id)
+    if not review:
+        return "Review not found"
+    return render_template('review.html', review = review)
+
+@app.route('/editReview/<int:review_id>', methods=['GET', 'POST'])
+def editReview(review_id):
+    review = db_manager.get(review_id)
+    if request.method =='POST':
+        title = request.form['title']
+        rating = request.form['rating']
+        userReview = request.form['review']
+        db_manager.update(review_id, title, userReview,rating)
+        return redirect(url_for('show_all_reviews'))  
+    return render_template('editForm.html', review = review)
   
 # RUN THE FLASK APP
 if __name__ == "__main__":
