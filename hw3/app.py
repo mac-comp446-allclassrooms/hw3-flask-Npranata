@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from flask import render_template, request,redirect
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -88,10 +89,48 @@ def reset_db():
 # ROUTES
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
+#Shows a table of movie reviews
 @app.route('/')
 def show_all_reviews():
-    return 'Welcome to Movie Theater reviews!'
+    reviews = db_manager.get()
+    return render_template("mainPage.html", reviews = reviews)
 
+#Handles creation of movie reviews and adds it to the database
+@app.route('/create', methods=['GET', 'POST'])
+def create_review():
+    if request.method == 'POST':
+        title = request.form['title']
+        review = request.form['review']
+        rating = request.form['rating']
+        db_manager.create(title,review,rating)
+        return redirect(url_for('show_all_reviews'))  
+    return render_template("form.html")
+
+#Handles review deletions
+@app.route('/delete/<int:review_id>')
+def delete_review(review_id):
+   db_manager.delete(review_id)
+   return redirect(url_for('show_all_reviews'))  
+
+#Allows user to look up a movie review
+@app.route('/check_review/<int:review_id>')
+def checkReview(review_id):
+    review = db_manager.get(review_id)
+    if not review:
+        return "Review not found"
+    return render_template('review.html', review = review)
+
+#Allows users to edit movie reviews
+@app.route('/editReview/<int:review_id>', methods=['GET', 'POST'])
+def editReview(review_id):
+    review = db_manager.get(review_id)
+    if request.method =='POST':
+        title = request.form['title']
+        rating = request.form['rating']
+        userReview = request.form['review']
+        db_manager.update(review_id, title, userReview,rating)
+        return redirect(url_for('show_all_reviews'))  
+    return render_template('editForm.html', review = review)
   
 # RUN THE FLASK APP
 if __name__ == "__main__":

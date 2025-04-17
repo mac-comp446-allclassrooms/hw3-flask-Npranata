@@ -1,0 +1,44 @@
+<!-- Main Page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <h1> Movie Reviews</h1>
+    <a href="{{ url_for('create_review') }}">
+        <p class="add_review">Add Review</p>
+    </a>
+    <table style="width:50%">
+        <tr> 
+            <th> Title</th>
+            <th >Rating</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for review in reviews %}
+        <tr>
+            <td>
+                <a href="{{url_for('checkReview', review_id = review.id)}}">{{review.title}}</a>
+            </td>
+            <td>
+                {% for i in range(review.rating) %}
+                    <span class="fa fa-star checked"></span>
+                {% endfor %}
+            </td>
+            <td> 
+                <a href="{{url_for('editReview', review_id = review.id)}}">Edit</a>
+            </td>
+            <td>
+                <a href="{{url_for('delete_review', review_id = review.id)}}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+<!-- Edit Review Page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='editForm.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="editForm">
+        <form method="POST">
+            <label>
+                Title:
+                <input type="text" name="title" value="{{ review.title }}">
+            </label>        
+            <br><br>
+            <label>
+                Review:
+                <textarea  class="editReviewBox" name="review" rows="5" cols="33"> {{review.text}} </textarea>
+            </label>
+            <br><br>
+            <label> 
+                Rating:
+                <select name="rating">
+                    {%for i in range(1,6)%}
+                    <option value="{{i}}">
+                        {{i}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+
