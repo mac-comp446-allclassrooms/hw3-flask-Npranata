@@ -10,3 +10,8 @@
     margin-right: auto;
     margin-top: 42px;
 }
+
+.reviewBox{
+    padding: 5px;
+    box-sizing: border-box;
+}
